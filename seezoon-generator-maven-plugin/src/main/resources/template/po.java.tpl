@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 </#if>
-import com.seezoon.framework.concept.domain.repository.po.BasePO;
+import com.seezoon.mybatis.repository.po.BasePO;
 
 import lombok.Getter;
 import lombok.Setter;

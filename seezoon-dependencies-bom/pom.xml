@@ -7,19 +7,22 @@
 
     <groupId>com.seezoon</groupId>
     <artifactId>seezoon-dependencies-bom</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
-
-    <name>Seezoon Dependencies Bom</name>
+    <name>${project.artifactId}</name>
     <description>A simple seezoon-dependencies-bom.</description>
+    <url>https://github.com/seezoon</url>
 
     <properties>
         <spring.boot.version>2.6.0</spring.boot.version>
-        <mybatis-spring-boot-starter.version>2.1.3</mybatis-spring-boot-starter.version>
         <commons-text.version>1.9</commons-text.version>
         <commons-io.version>2.8.0</commons-io.version>
         <guava.version>30.1-jre</guava.version>
         <grpc.version>1.42.1</grpc.version>
+        <mybatis-spring-boot-starter.version>2.1.3</mybatis-spring-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>1.4.1</pagehelper-spring-boot-starter.version>
+        <spring-retry.version>1.3.0</spring-retry.version>
+        <fastjson.version>1.2.75</fastjson.version>
         <!-- 编译相关 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
@@ -84,6 +87,22 @@
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-stub</artifactId>
                 <version>${grpc.version}</version>
+            </dependency>
+            <!-- mybatis -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.retry</groupId>
+                <artifactId>spring-retry</artifactId>
+                <version>${spring-retry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -30,7 +30,7 @@
 ```xml
 
 <dependency>
-    <groupId>com.seezoon.framework</groupId>
+    <groupId>com.seezoon.web</groupId>
     <artifactId>seezoon-framework-spring-boot-starter</artifactId>
     <version>${latest}</version>
 </dependency>

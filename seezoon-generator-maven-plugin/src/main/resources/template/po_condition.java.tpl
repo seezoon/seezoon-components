@@ -14,9 +14,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
   </#if>
 </#list>
 
-import com.seezoon.framework.concept.domain.repository.po.PagePOCondition;
+import com.seezoon.mybatis.repository.po.PagePOCondition;
 <#if sortable>
-import com.seezoon.framework.concept.domain.repository.sort.annotation.SortField;
+import com.seezoon.mybatis.repository.sort.annotation.SortField;
 </#if>
 import lombok.Getter;
 import lombok.Setter;

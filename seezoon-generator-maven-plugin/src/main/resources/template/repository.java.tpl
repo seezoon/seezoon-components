@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Repository;
 
-import com.seezoon.framework.concept.domain.repository.AbstractCrudRepository;
+import com.seezoon.mybatis.repository.AbstractCrudRepository;
 import ${baseRepositoryPackage}.${moduleName}.repository.mapper.${className}Mapper;
 import ${baseRepositoryPackage}.${moduleName}.repository.po.${classNamePO};
 <#list columnPlans as columnPlan>
