@@ -15,6 +15,7 @@
     <modules>
         <module>seezoon-dependencies-bom</module>
         <module>seezoon-generator-maven-plugin</module>
+        <module>grpc-spring-boot-starter</module>
     </modules>
 
     <properties>

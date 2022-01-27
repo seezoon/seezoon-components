@@ -1,0 +1,4 @@
+# AutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.seezoon.grpc.autoconfigure.GrpcServerAutoConfiguration,\
+com.seezoon.grpc.autoconfigure.GrpcClientAutoConfiguration

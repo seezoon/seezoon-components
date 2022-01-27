@@ -1,0 +1,11 @@
+grpc:
+  server:
+    port: 9000
+  client:
+    stubs:
+      - clazz: com.seezoon.grpc.demo.HelloWorldGrpc.HelloWorldStub
+        channel: xxx
+    channels:
+      xxx:
+        target: 1
+        timeout: 1s

@@ -19,8 +19,8 @@
     <properties>
         <!-- 自定义maven 插件时候依赖 -->
         <maven-plugin-api.version>3.8.4</maven-plugin-api.version>
-        <maven-plugin-annotations.version>3.6.2</maven-plugin-annotations.version>
-        <maven-plugin-plugin.version>3.6.2</maven-plugin-plugin.version>
+        <maven-plugin-annotations.version>3.6.4</maven-plugin-annotations.version>
+        <maven-plugin-plugin.version>3.6.4</maven-plugin-plugin.version>
         <maven-project.version>2.2.1</maven-project.version>
     </properties>
     <dependencies>
@@ -97,4 +97,6 @@
             </plugins>
         </pluginManagement>
     </build>
+
+
 </project>
