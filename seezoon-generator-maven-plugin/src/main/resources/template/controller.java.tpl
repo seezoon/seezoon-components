@@ -26,9 +26,9 @@ import com.github.pagehelper.PageSerializable;
 import ${baseRepositoryPackage}.${moduleName}.repository.${className}Repository;
 import ${baseRepositoryPackage}.${moduleName}.repository.po.${classNamePO};
 import ${baseRepositoryPackage}.${moduleName}.repository.po.${classNamePO}Condition;
-import com.seezoon.framework.api.DefaultCodeMsgBundle;
-import com.seezoon.framework.api.Result;
-import com.seezoon.framework.web.BaseController;
+import com.seezoon.web.api.DefaultCodeMsgBundle;
+import com.seezoon.web.api.Result;
+import com.seezoon.web.controller.BaseController;
 
 import lombok.RequiredArgsConstructor;
 
@@ -79,7 +79,7 @@ public class ${className}Controller extends BaseController {
     public Result<Boolean> check${columnPlan.javaFieldName?cap_first}(@RequestParam(required = false) ${pkPlan.dataType.javaType()} ${pkPlan.javaFieldName},
         ${columnPlan.stringType?string("@NotBlank","@NotNull")} @RequestParam ${columnPlan.dataType.javaType()} ${columnPlan.javaFieldName}) {
         ${classNamePO} ${classNamePO?uncap_first} = this.${className?uncap_first}Repository.findBy${columnPlan.javaFieldName?cap_first}(${columnPlan.javaFieldName});
-                return Result.ok(null == ${classNamePO?uncap_first} || Objects.equals(${classNamePO?uncap_first}.get${pkPlan.javaFieldName?cap_first}(), id));
+                return Result.ok(null == ${classNamePO?uncap_first} || Objects.equals(${classNamePO?uncap_first}.get${pkPlan.javaFieldName?cap_first}(), ${pkPlan.javaFieldName}));
     }
 
       </#if>

@@ -7,7 +7,7 @@
     <parent>
         <artifactId>seezoon-components</artifactId>
         <groupId>com.seezoon</groupId>
-        <version>1.0.1</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>mybatis-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
@@ -17,7 +17,6 @@
         <dependency>
             <groupId>com.seezoon</groupId>
             <artifactId>seezoon-core</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

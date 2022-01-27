@@ -1,4 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.seezoon.framework.autoconfigure.SeezoonDaoAutoConfiguration
+com.seezoon.mybatis.autoconfigure.SeezoonMybatisAutoConfiguration
 
