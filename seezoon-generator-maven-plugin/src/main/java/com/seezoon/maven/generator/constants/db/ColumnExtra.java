@@ -7,7 +7,6 @@ package com.seezoon.maven.generator.constants.db;
  */
 public enum ColumnExtra {
     // 缺省
-    none,
-    // 自增
-    auto_increment
+    none, // 自增
+    auto_increment, //
 }

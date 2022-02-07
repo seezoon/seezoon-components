@@ -21,8 +21,8 @@ import org.apache.commons.lang3.ArrayUtils;
 @Builder
 public class ColumnPlan implements Comparable<ColumnPlan> {
 
-    private static final String[] DEFAULT_COLUMNS =
-        {"id", "status", "create_by", "create_time", "update_by", "update_time", "remarks"};
+    private static final String[] DEFAULT_COLUMNS = {"id", "status", "create_by", "create_time", "update_by",
+            "update_time", "remarks"};
     /**
      * DB 列名称
      */
@@ -36,7 +36,7 @@ public class ColumnPlan implements Comparable<ColumnPlan> {
      */
     private ColumnKey columnKey;
     /**
-     * 主键额外说明 如auto_increment
+     * 额外说明 如auto_increment
      */
     private ColumnExtra extra;
     /**
@@ -108,11 +108,10 @@ public class ColumnPlan implements Comparable<ColumnPlan> {
     }
 
     public boolean isNumberType() {
-        return ArrayUtils.contains(
-            new String[] {ColumnDataType.TINYINT.javaType(), ColumnDataType.INT.javaType(),
-                ColumnDataType.INTEGER.javaType(), ColumnDataType.BIGINT.javaType(), ColumnDataType.DOUBLE.javaType(),
-                ColumnDataType.FLOAT.javaType(), ColumnDataType.DECIMAL.javaType(), ColumnDataType.NUMERIC.javaType(),},
-            this.getDataType().javaType());
+        return ArrayUtils.contains(new String[]{ColumnDataType.TINYINT.javaType(), ColumnDataType.INT.javaType(),
+                        ColumnDataType.INTEGER.javaType(), ColumnDataType.BIGINT.javaType(), ColumnDataType.DOUBLE.javaType(),
+                        ColumnDataType.FLOAT.javaType(), ColumnDataType.DECIMAL.javaType(), ColumnDataType.NUMERIC.javaType(),},
+                this.getDataType().javaType());
     }
 
     /**
@@ -130,7 +129,7 @@ public class ColumnPlan implements Comparable<ColumnPlan> {
     }
 
     public boolean isUniqueField() {
-        return ArrayUtils.contains(new ColumnKey[] {ColumnKey.UNI}, this.getColumnKey());
+        return ArrayUtils.contains(new ColumnKey[]{ColumnKey.UNI}, this.getColumnKey());
     }
 
     public String getUnderScoreFieldName() {

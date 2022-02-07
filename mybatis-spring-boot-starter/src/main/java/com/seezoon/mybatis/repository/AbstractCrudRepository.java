@@ -114,8 +114,12 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
             if (null == t.getId() && t.getId() instanceof String) {
                 t.setId((PK) IdGen.uuid());
             }
-            t.setCreateBy(UserContextLoader.getInstance().getUserId());
-            t.setUpdateBy(UserContextLoader.getInstance().getUserId());
+            if (null == t.getCreateBy()) {
+                t.setCreateBy(UserContextLoader.getInstance().getUserId());
+            }
+            if (null == t.getUpdateBy()) {
+                t.setUpdateBy(UserContextLoader.getInstance().getUserId());
+            }
             t.setCreateTime(new Date());
             t.setUpdateTime(t.getCreateTime());
         });
@@ -130,7 +134,9 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
      */
     public int updateSelective(@NotNull T record) {
         record.setUpdateTime(new Date());
-        record.setUpdateBy(UserContextLoader.getInstance().getUserId());
+        if (null == record.getUpdateBy()) {
+            record.setUpdateBy(UserContextLoader.getInstance().getUserId());
+        }
         return this.d.updateByPrimaryKeySelective(record);
     }
 
@@ -146,7 +152,9 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
      */
     public int update(@NotNull T record) {
         record.setUpdateTime(new Date());
-        record.setUpdateBy(UserContextLoader.getInstance().getUserId());
+        if (null == record.getUpdateBy()) {
+            record.setUpdateBy(UserContextLoader.getInstance().getUserId());
+        }
         return this.d.updateByPrimaryKey(record);
     }
 
