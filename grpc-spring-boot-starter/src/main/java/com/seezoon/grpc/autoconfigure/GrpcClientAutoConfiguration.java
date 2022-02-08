@@ -4,6 +4,7 @@ import com.seezoon.grpc.client.GrpcClientBeanPostProcessor;
 import com.seezoon.grpc.client.GrpcClientDefinition;
 import com.seezoon.grpc.client.GrpcClientDiscovery;
 import com.seezoon.grpc.config.GrpcClientProperties;
+import com.seezoon.grpc.support.TraceClientInterceptor;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -37,5 +38,10 @@ public class GrpcClientAutoConfiguration {
                     .registerBeanDefinition(definition.getBeanName(), beanDefinitionBuilder.getBeanDefinition());
             log.info("register grpc client bean name[{}],class:[{}]", definition.getBeanName(), definition.getClazz());
         }
+    }
+
+    @Bean
+    public TraceClientInterceptor TraceClientInterceptor() {
+        return new TraceClientInterceptor();
     }
 }

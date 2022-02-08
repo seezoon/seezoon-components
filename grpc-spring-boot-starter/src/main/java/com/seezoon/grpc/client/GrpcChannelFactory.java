@@ -13,6 +13,7 @@ import io.grpc.netty.shaded.io.netty.handler.ssl.SslContextBuilder;
 import io.grpc.netty.shaded.io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +82,13 @@ public class GrpcChannelFactory {
     }
 
     private void configureInterceptors(ChannelProperties channelProperties, ManagedChannelBuilder<?> channelBuilder) {
-        List<Class<? extends ClientInterceptor>> interceptors = channelProperties.getInterceptors();
+
+        List<Class<? extends ClientInterceptor>> interceptors = new ArrayList<>();
+        List<Class<? extends ClientInterceptor>> commonInterceptors = grpcClientProperties.getCommon()
+                .getInterceptors();
+        List<Class<? extends ClientInterceptor>> channelInterceptors = channelProperties.getInterceptors();
+        interceptors.addAll(commonInterceptors);
+        interceptors.addAll(channelInterceptors);
         List<ClientInterceptor> clientInterceptors = new ArrayList<>();
         for (Class<? extends ClientInterceptor> interceptor : interceptors) {
             ClientInterceptor clientInterceptor = applicationContext.getBean(interceptor);
@@ -90,6 +97,8 @@ public class GrpcChannelFactory {
             }
             clientInterceptors.add(clientInterceptor);
         }
+        Collections.reverse(clientInterceptors);
+        // 先放的后执行
         channelBuilder.intercept(clientInterceptors);
     }
 

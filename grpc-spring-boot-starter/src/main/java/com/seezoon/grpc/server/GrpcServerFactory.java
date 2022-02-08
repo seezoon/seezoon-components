@@ -7,6 +7,7 @@ import io.grpc.ServerInterceptor;
 import io.grpc.netty.shaded.io.grpc.netty.NettyServerBuilder;
 import io.grpc.protobuf.services.ProtoReflectionService;
 import java.net.InetSocketAddress;
+import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class GrpcServerFactory {
 
     private void configureInterceptor(NettyServerBuilder builder) {
         List<Class<? extends ServerInterceptor>> interceptors = grpcServerProperties.getInterceptors();
+        Collections.reverse(interceptors);
         for (Class<? extends ServerInterceptor> interceptor : interceptors) {
             ServerInterceptor serverInterceptor = applicationContext.getBean(interceptor);
             if (null == serverInterceptor) {

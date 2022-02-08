@@ -9,21 +9,29 @@ public class ThreadMdc {
     private final static String THREAD_ID = "tid";
     private static final int LENGTH = 10;
 
-    public static void put() {
-        MDC.put(THREAD_ID, randomThreadId());
+    public static String put() {
+        String threadId = randomThreadId();
+        MDC.put(THREAD_ID, threadId);
+        return threadId;
     }
 
-    public static void put(String tid) {
+    public static String put(String tid) {
         if (StringUtils.isNotEmpty(tid) && tid.length() == LENGTH) {
             MDC.put(THREAD_ID, tid);
         } else {
-            put();
+            tid = put();
         }
+        return tid;
     }
 
     public static String peek() {
         String tid = MDC.get(THREAD_ID);
         return StringUtils.isNotEmpty(tid) ? tid : null;
+    }
+
+    public static String transmit() {
+        String peek = peek();
+        return put(peek);
     }
 
     public static void clear() {

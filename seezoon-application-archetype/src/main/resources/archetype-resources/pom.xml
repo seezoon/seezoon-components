@@ -20,6 +20,7 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-archetype-plugin.version>3.2.1</maven-archetype-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
     <dependencies>
         <!--contains junit 5-->

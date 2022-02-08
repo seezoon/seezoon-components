@@ -39,7 +39,6 @@ public class ExceptionAdvice {
             HttpMessageNotReadableException.class})
     public Result parameterInvalidException(Exception e) {
         return Result.error(DefaultCodeMsgBundle.PARAM_INVALID, e.getMessage());
-
     }
 
     @ExceptionHandler({BindException.class})

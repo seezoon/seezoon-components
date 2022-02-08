@@ -5,6 +5,8 @@ package com.seezoon.core.concept.infrastructure.exception;
  */
 public class SysException extends BaseException {
 
+    public static final String TYPE = "1";
+
     private static final long serialVersionUID = 1L;
 
     private static final String DEFAULT_ERR_CODE = "SYS_ERROR";

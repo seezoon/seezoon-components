@@ -1,2 +1,3 @@
+# 配合脚本使用的
 org.springframework.context.ApplicationListener=\
 org.springframework.boot.context.ApplicationPidFileWriter
