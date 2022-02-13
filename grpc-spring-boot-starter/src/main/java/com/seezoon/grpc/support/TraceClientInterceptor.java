@@ -12,6 +12,7 @@ import io.grpc.MethodDescriptor;
 /**
  * 线程号传递
  */
+@Deprecated
 public class TraceClientInterceptor implements ClientInterceptor {
 
 

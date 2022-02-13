@@ -34,6 +34,19 @@
         <dependency>
             <groupId>com.seezoon</groupId>
             <artifactId>grpc-spring-boot-starter</artifactId>
+            <!--
+            exclusion server if don`t need grpc server
+            <exclusions>
+                 <exclusion>
+                     <groupId>net.devh</groupId>
+                     <artifactId>grpc-server-spring-boot-starter</artifactId>
+                 </exclusion>
+             </exclusions>
+             -->
+        </dependency>
+        <dependency>
+            <groupId>com.seezoon</groupId>
+            <artifactId>observable-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,6 +82,7 @@
             </plugin>
             <!-- 打包成结构化的包 -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-assembly-plugin.version}</version>
                 <configuration>

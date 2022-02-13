@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
  * https://stackoverflow.com/questions/39797142/how-to-add-global-exception-interceptor-in-grpc-server
  * https://github.com/grpc/grpc-java/blob/master/examples/src/main/java/io/grpc/examples/header/HeaderServerInterceptor.java
  */
+@Deprecated
 public class ServerExceptionInterceptor implements ServerInterceptor {
 
     @Override

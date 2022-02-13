@@ -7,6 +7,9 @@ import io.grpc.Metadata;
 import io.grpc.StatusRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * 调用grpc server 时候如果需要手动处理异常使用
+ */
 public class GrpcExceptionTranslator {
 
     public static boolean isBizException(StatusRuntimeException e) {

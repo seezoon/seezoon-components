@@ -10,6 +10,7 @@ import io.grpc.ServerInterceptor;
 /**
  * 添加线程号
  */
+@Deprecated
 public class TraceServerInterceptor implements ServerInterceptor {
 
     @Override
