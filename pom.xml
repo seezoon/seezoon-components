@@ -23,6 +23,7 @@
         <module>seezoon-application</module>
         <module>seezoon-application-archetype</module>
         <module>observable-spring-boot-starter</module>
+        <module>seezoon-web-security-starter</module>
     </modules>
 
     <properties>
