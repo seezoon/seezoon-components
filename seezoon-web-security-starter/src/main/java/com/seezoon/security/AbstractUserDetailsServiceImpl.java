@@ -16,7 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  *
  * @author hdf
  */
-public abstract class UserDetailsServiceImpl implements UserDetailsService {
+public abstract class AbstractUserDetailsServiceImpl implements UserDetailsService {
 
     private final static String LOGIN_TYPE = "loginType";
     private final static String LOGIN_PASSWORD = "password";

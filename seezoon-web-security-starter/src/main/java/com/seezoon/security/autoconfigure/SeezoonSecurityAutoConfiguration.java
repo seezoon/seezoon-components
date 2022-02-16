@@ -28,9 +28,4 @@ public class SeezoonSecurityAutoConfiguration {
     public LoginSecurityService loginSecurityService(SeezoonSecurityProperties seezoonSecurityProperties) {
         return new LoginSecurityService(seezoonSecurityProperties, valueOperations);
     }
-
-    @Bean
-    public UserDetailsServiceTest userDetailsServiceTest() {
-        return new UserDetailsServiceTest();
-    }
 }
