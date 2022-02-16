@@ -7,7 +7,7 @@
     <parent>
         <artifactId>seezoon-components</artifactId>
         <groupId>com.seezoon</groupId>
-        <version>1.0.1</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>observable-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
