@@ -5,7 +5,7 @@
 
     <groupId>com.seezoon</groupId>
     <artifactId>seezoon-components</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
 
     <name>seezoon-components-parent</name>
@@ -14,6 +14,7 @@
 
     <modules>
         <module>seezoon-dependencies-bom</module>
+        <module>seezoon-core</module>
         <module>seezoon-generator-maven-plugin</module>
         <module>grpc-spring-boot-starter</module>
         <module>mybatis-spring-boot-starter</module>
