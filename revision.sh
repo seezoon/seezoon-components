@@ -7,6 +7,11 @@ if [ -z "$version" ]; then
   echo -n "Enter New Version："
   read -r version
 fi
+
+if [ -z "$version" ]; then
+  echo "your input is empty"
+  exit 1
+fi
 #
 mvn versions:set -DnewVersion="${version}"
 # update bom version
