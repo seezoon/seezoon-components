@@ -23,7 +23,7 @@ start() {
     echo "JAVA_OPTS=${JAVA_OPTS}"
   fi
 
-  SERVER_OTPS="${SERVER_OTPS} --spring.pid.file=${PID_FILE} --spring.pid.write-on-lifecycle=RUNNING"
+  SERVER_OTPS="${SERVER_OTPS} --spring.pid.file=${PID_FILE}"
   echo "SERVER_OTPS=${SERVER_OTPS}"
 
   if [ ! -d logs ]; then
@@ -41,7 +41,9 @@ start() {
   done
   echo
   health
-  startSupervisor
+  if [ "${IN_CONTAINER}" != true ]; then
+    startSupervisor
+  fi
   echoGreen "Application Started"
 }
 # 停止

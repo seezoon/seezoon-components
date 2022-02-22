@@ -3,4 +3,4 @@ spring:
   profiles:
     active: local
   application:
-    name: "@project.artifactId@"
+    name: "@project.parent.artifactId@"
