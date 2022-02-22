@@ -3,27 +3,25 @@
 
 import org.apache.commons.io.FileUtils
 
-import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-def packageName = request.packageName
-def demoPackage = "com.demo"
-def artifactId = request.artifactId
 println "archetype-post-generate >>>>>"
 
+def artifactId = request.artifactId
 Path projectPath = Paths.get(request.outputDirectory, "${artifactId}")
-// handle setenv.sh MAIN_CLASS
-Path setEnvPath = projectPath.resolve("${artifactId}-server/build/assembly/conf/setenv.sh");
-Charset charset = StandardCharsets.UTF_8
-String content = new String(Files.readAllBytes(setEnvPath), charset);
-content = content.replace(demoPackage, packageName);
-Files.write(setEnvPath, content.getBytes(charset));
-println "relpace ${setEnvPath} ${demoPackage} to ${packageName}"
+def packageName = request.packageName
 
+// replace packagename 相对project path
+def demoPackage = "com.demo"
 // 隐含文件不会生成到archetype中需要处理
+def copyFiles = ["gitignore": ".gitignore"]
+// 非java 相关文件中的package 不会自动处理
+def replaceFiles = ["${artifactId}-server/build/assembly/conf/setenv.sh"]
+
+
 // 闭包可以访问外部变量比较方便
 def copyFromClassPath = {
         /**
@@ -39,9 +37,18 @@ def copyFromClassPath = {
         } finally {
             null != input && input.close()
         }
-
-
 }
 
-// copy gitignore
-copyFromClassPath("gitignore", ".gitignore")
+// need copy
+for (def f in copyFiles) {
+    copyFromClassPath(f.key, f.value);
+}
+
+for (r in replaceFiles) {
+    def target = projectPath.resolve(r)
+    String content = new String(Files.readAllBytes(projectPath.resolve(r)), StandardCharsets.UTF_8);
+    content = content.replace(demoPackage, packageName);
+    Files.write(target, content.getBytes(StandardCharsets.UTF_8));
+    println "relpaced ${r} ${demoPackage} to ${packageName}"
+}
+

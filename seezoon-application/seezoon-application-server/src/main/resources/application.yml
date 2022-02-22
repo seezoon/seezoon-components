@@ -2,5 +2,7 @@
 spring:
   profiles:
     active: local
+    # 更多配置文件时候配合include
+    #include:
   application:
-    name: "@project.artifactId@"
+    name: "@project.parent.artifactId@"
