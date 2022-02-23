@@ -11,6 +11,7 @@ echo "WORK_DIR=${WORK_DIR},APP_NAME=${APP_NAME}"
 # 启动
 start() {
   echoRed "Application Starting...."
+  export LOG_PATH
   RUN_JAVA=java
   if [ -n "${JAVA_HOME}" ]; then
     RUN_JAVA=${JAVA_HOME}/bin/java
