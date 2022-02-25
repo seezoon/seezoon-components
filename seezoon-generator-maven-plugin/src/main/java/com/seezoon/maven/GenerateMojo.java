@@ -11,7 +11,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
 /**
@@ -38,6 +37,18 @@ public class GenerateMojo extends AbstractMojo {
      */
     @Parameter(property = "seezoon.generate.db.password")
     private String password;
+
+    /**
+     * 表前缀
+     */
+    @Parameter(property = "fit.generate.db.table.prefix")
+    private String tablePrefix;
+
+    /**
+     * 字段前缀
+     */
+    @Parameter(property = "fit.generate.db.field.prefix")
+    private String fieldPrefix;
 
     /**
      * 使用properties 或者命令行，多个英文逗号分隔
@@ -95,6 +106,8 @@ public class GenerateMojo extends AbstractMojo {
             }
         }
 
+        springArgs.add("--tablePrefix=" + tablePrefix);
+        springArgs.add("--fieldPrefix=" + fieldPrefix);
         springArgs.add("--base.dir=" + baseDir);
         springArgs.add("--base.sqlMapper.path=" + baseSqlMapperPath);
         springArgs.add("--base.repository.package=" + baseRepositoryPackage);

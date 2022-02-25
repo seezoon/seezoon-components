@@ -9,4 +9,12 @@ public enum ColumnExtra {
     // 缺省
     none, // 自增
     auto_increment, //
+    ;
+
+    public static ColumnExtra parse(String v) {
+        if (ColumnExtra.auto_increment.toString().equals(v)) {
+            return auto_increment;
+        }
+        return none;
+    }
 }

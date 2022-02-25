@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.util.Assert;
 
 /**
@@ -22,6 +21,7 @@ public enum ColumnDataType {
     VARCHAR("varchar", "VARCHAR", String.class.getSimpleName()),
     CHAR("char", "CHAR", String.class.getSimpleName()),
     TINYINT("tinyint", "TINYINT", Integer.class.getSimpleName()),
+    SMALLINT("smallint", "SMALLINT", Short.class.getSimpleName()),
     INT("int", "INTEGER", Integer.class.getSimpleName()),
     INTEGER("integer", "INTEGER", Integer.class.getSimpleName()),
     BIGINT("bigint", "BIGINT", Long.class.getSimpleName()),
@@ -63,7 +63,7 @@ public enum ColumnDataType {
     public static ColumnDataType parse(String dbType) {
         ColumnDataType columnDataType = COLUMN_DATA_TYPES.get(dbType);
         Assert.isTrue(null != columnDataType,
-            String.format("dbType[%s] not support,pls supplement enum ColumnDataType", dbType));
+                String.format("dbType[%s] not support,pls supplement enum ColumnDataType", dbType));
         return columnDataType;
     }
 

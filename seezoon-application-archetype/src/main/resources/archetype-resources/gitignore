@@ -37,14 +37,5 @@ Thumbs.db
 # license check result
 license-list
 
-# grpc compiler
-compiler/gradle.properties
-compiler/build/*
-compiler/.gradle/*
-
-# protobuf
-dubbo-serialization/dubbo-serialization-protobuf/build/*
-dubbo-demo/dubbo-demo-triple/build/*
-
 # global registry center
 .tmp

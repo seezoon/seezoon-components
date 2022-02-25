@@ -13,6 +13,7 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +26,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 @Validated
-public class SystemGeneratorService  {
+public class SystemGeneratorService {
 
     private final GeneratorDao generatorDao;
     /**
@@ -52,6 +53,11 @@ public class SystemGeneratorService  {
     @Value("#{'${tables:}'.empty ? null : '${tables:}'.split(',')}")
     private String[] tables;
 
+    @Value("${tablePrefix:}")
+    private String tablePrefix;
+
+    @Value("${fieldPrefix:}")
+    private String fieldPrefix;
 
     public void generate() throws IOException {
         TablePlanHandler tablePlanHandler = new SystemTablePlanHandlerImpl(baseSqlMapperPath, baseRepositoryPackage,
@@ -69,6 +75,16 @@ public class SystemGeneratorService  {
         List<TablePlan> tablePlans = new ArrayList<>();
         allDbTables.forEach((dbTable) -> {
             List<DbTableColumn> dbTableColumns = findDbTableColumns(dbTable.getName());
+            // 处理字段前缀
+            for (DbTableColumn dbTableColumn : dbTableColumns) {
+                if (StringUtils.isNotEmpty(fieldPrefix) && dbTableColumn.getName().startsWith(fieldPrefix)) {
+                    dbTableColumn.setName(dbTableColumn.getName().replaceFirst(fieldPrefix, ""));
+                }
+            }
+            // 处理表前缀
+            if (StringUtils.isNotEmpty(tablePrefix) && dbTable.getName().startsWith(tablePrefix)) {
+                dbTable.setName(dbTable.getName().replaceFirst(tablePrefix, ""));
+            }
             TablePlan tablePlan = tablePlanHandler.generate(dbTable, dbTableColumns);
             tablePlans.add(tablePlan);
         });

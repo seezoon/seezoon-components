@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 public class SystemTablePlanHandlerImpl implements TablePlanHandler {
 
 
-
     private static final Logger logger = LoggerFactory.getLogger(SystemTablePlanHandlerImpl.class);
     /**
      * DB 及表字段的分隔符
@@ -89,7 +88,7 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
                     .fieldName(v.getComment())
                     .columnKey(StringUtils.isNotEmpty(v.getColumnKey()) ? ColumnKey.valueOf(v.getColumnKey())
                             : ColumnKey.NONE)
-                    .extra(StringUtils.isNotEmpty(v.getExtra()) ? ColumnExtra.valueOf(v.getExtra()) : ColumnExtra.none)
+                    .extra(ColumnExtra.parse(v.getExtra()))
                     .columnType(v.getColumnType())
                     .dataType(ColumnDataType.parse(v.getDataType()))
                     .maxLength(v.getMaxlength())
@@ -127,8 +126,8 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
                     }
                 }
                 // 有索引的
-                if ((ColumnKey.MUL.equals(columnPlan.getColumnKey())
-                    || ColumnKey.UNI.equals(columnPlan.getColumnKey()))) {
+                if ((ColumnKey.MUL.equals(columnPlan.getColumnKey()) || ColumnKey.UNI
+                        .equals(columnPlan.getColumnKey()))) {
                     columnPlan.setSearch(true);
                     columnPlan.setSortable(true);
                     columnPlan.setQueryType(QueryType.EQUAL);
@@ -139,11 +138,11 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
             if (columnPlan.getColumnKey().equals(ColumnKey.PRI)) {
                 if (null != tablePlan.getPkPlan()) {
                     logger.warn("table[{}] must have only one primary key,otherwise generator select first primary key",
-                        tablePlan.getTableName());
+                            tablePlan.getTableName());
                 } else {
                     tablePlan.setPkPlan(new PkPlan(columnPlan.getDbColumnName(), columnPlan.getJavaFieldName(),
-                        columnPlan.getDataType(), DefaultColumns.id.name().equals(columnPlan.getJavaFieldName()),
-                        ColumnExtra.auto_increment.equals(columnPlan.getExtra())));
+                            columnPlan.getDataType(), DefaultColumns.id.name().equals(columnPlan.getJavaFieldName()),
+                            ColumnExtra.auto_increment.equals(columnPlan.getExtra())));
                     // 自增不可插入
                     columnPlan.setInsert(!tablePlan.getPkPlan().isAutoIncrement());
                     // 主键也不可更新
@@ -155,7 +154,7 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
         // 一定要有主键
         if (null == tablePlan.getPkPlan()) {
             throw new IllegalArgumentException(
-                String.format("table[%s] must have primary key", tablePlan.getTableName()));
+                    String.format("table[%s] must have primary key", tablePlan.getTableName()));
         }
         return columnPlans;
     }
@@ -163,8 +162,7 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
     /**
      * 通过表名提取模块名和功能名，按{@link SystemTablePlanHandlerImpl#DB_DELIMITER} 拆分为2个，只拆第一个分隔符
      *
-     * @param tableName
-     *            not null
+     * @param tableName not null
      * @return
      */
     private List<String> extractModuleAndFuntion(String tableName) {
