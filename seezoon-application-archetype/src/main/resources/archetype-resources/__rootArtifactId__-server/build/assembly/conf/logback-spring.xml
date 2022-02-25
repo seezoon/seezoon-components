@@ -3,6 +3,9 @@
 #set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
     <property name="LOG_HOME" value="${symbol_dollar}{LOG_PATH:-./logs}"/>
     <property name="LOG_FILE" value="seezoon"/>
     <property name="LOG_PATTERN"
