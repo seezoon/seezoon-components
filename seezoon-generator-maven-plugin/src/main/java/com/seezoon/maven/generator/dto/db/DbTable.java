@@ -21,4 +21,9 @@ public class DbTable {
      */
     private String comment;
 
+    /**
+     * 标准化候的名字，比如去除前缀
+     */
+    private String normalizedName;
+
 }

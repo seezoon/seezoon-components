@@ -69,11 +69,11 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
         tablePlan.setTableName(dbTable.getName());
         tablePlan.setMenuName(dbTable.getComment());
         // 放入默认的模块名和功能名
-        List<String> moduleAndFuntion = extractModuleAndFuntion(dbTable.getName());
+        List<String> moduleAndFuntion = extractModuleAndFuntion(dbTable.getNormalizedName());
         tablePlan.setModuleName(moduleAndFuntion.get(0));
         tablePlan.setFunctionName(moduleAndFuntion.get(1));
         tablePlan.setTemplateType(TemplateType.CRUD.ordinal());
-        tablePlan.setClassName(CaseUtils.toCamelCase(dbTable.getName(), true, DB_DELIMITER.toCharArray()));
+        tablePlan.setClassName(CaseUtils.toCamelCase(dbTable.getNormalizedName(), true, DB_DELIMITER.toCharArray()));
         tablePlan.setClassNamePO(tablePlan.getClassName() + PO);
         tablePlan.setColumnPlans(this.createColumnPlan(tablePlan, dbTableColumns));
         return tablePlan;
@@ -92,7 +92,7 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
                     .columnType(v.getColumnType())
                     .dataType(ColumnDataType.parse(v.getDataType()))
                     .maxLength(v.getMaxlength())
-                    .javaFieldName(CaseUtils.toCamelCase(v.getName(), false, DB_DELIMITER.toCharArray()))
+                    .javaFieldName(CaseUtils.toCamelCase(v.getNormalizedName(), false, DB_DELIMITER.toCharArray()))
                     .nullable(v.getNullable())
                     .sort(v.getSort())
                     .queryType(QueryType.NONE)

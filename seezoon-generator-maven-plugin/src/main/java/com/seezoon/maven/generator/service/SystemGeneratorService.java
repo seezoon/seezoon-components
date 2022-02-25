@@ -78,12 +78,16 @@ public class SystemGeneratorService {
             // 处理字段前缀
             for (DbTableColumn dbTableColumn : dbTableColumns) {
                 if (StringUtils.isNotEmpty(fieldPrefix) && dbTableColumn.getName().startsWith(fieldPrefix)) {
-                    dbTableColumn.setName(dbTableColumn.getName().replaceFirst(fieldPrefix, ""));
+                    dbTableColumn.setNormalizedName(dbTableColumn.getName().replaceFirst(fieldPrefix, ""));
+                } else {
+                    dbTableColumn.setNormalizedName(dbTableColumn.getName());
                 }
             }
             // 处理表前缀
             if (StringUtils.isNotEmpty(tablePrefix) && dbTable.getName().startsWith(tablePrefix)) {
-                dbTable.setName(dbTable.getName().replaceFirst(tablePrefix, ""));
+                dbTable.setNormalizedName(dbTable.getName().replaceFirst(tablePrefix, ""));
+            } else {
+                dbTable.setNormalizedName(dbTable.getNormalizedName());
             }
             TablePlan tablePlan = tablePlanHandler.generate(dbTable, dbTableColumns);
             tablePlans.add(tablePlan);

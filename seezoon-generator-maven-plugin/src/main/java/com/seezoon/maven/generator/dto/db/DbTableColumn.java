@@ -18,6 +18,10 @@ public class DbTableColumn {
      */
     private String name;
     /**
+     * 标准化候的字段名，如去除前缀
+     */
+    private String normalizedName;
+    /**
      * 列备注
      */
     private String comment;
