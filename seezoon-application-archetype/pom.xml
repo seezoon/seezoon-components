@@ -6,11 +6,11 @@
     <parent>
         <groupId>com.seezoon</groupId>
         <artifactId>seezoon-components</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>seezoon-application-archetype</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>maven-archetype</packaging>
     <name>${project.artifactId}</name>
 
