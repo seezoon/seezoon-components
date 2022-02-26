@@ -87,7 +87,7 @@ public class SystemGeneratorService {
             if (StringUtils.isNotEmpty(tablePrefix) && dbTable.getName().startsWith(tablePrefix)) {
                 dbTable.setNormalizedName(dbTable.getName().replaceFirst(tablePrefix, ""));
             } else {
-                dbTable.setNormalizedName(dbTable.getNormalizedName());
+                dbTable.setNormalizedName(dbTable.getName());
             }
             TablePlan tablePlan = tablePlanHandler.generate(dbTable, dbTableColumns);
             tablePlans.add(tablePlan);
