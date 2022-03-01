@@ -1,6 +1,7 @@
 package com.seezoon.security;
 
 import com.seezoon.security.constant.LockType;
+import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
     private final static String LOGIN_PASSWORD = "password";
     @Autowired
     private LoginSecurityService loginSecurityService;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -56,13 +56,13 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
      *
      * @param request
      * @param loginType
-     * @param userName
+     * @param username
      * @param password
      * @param <T>
      * @return
      */
-    public abstract <T> SeezoonUserDetails<T> getSeezoonUserDetails(HttpServletRequest request, String loginType,
-            String userName, String password);
+    public abstract <T extends Serializable> SeezoonUserDetails<T> getSeezoonUserDetails(HttpServletRequest request,
+            String loginType, String username, String password);
 
 
 }

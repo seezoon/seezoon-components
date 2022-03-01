@@ -15,6 +15,14 @@ public class SeezoonSecurityProperties {
 
     private LoginProperties login = new LoginProperties();
 
+    /**
+     * 跨站脚本攻击开关
+     * respone cookie name XSRF-TOKEN
+     * requst param _csrf or below;
+     * request head HEADER_NAME = "X-CSRF-TOKEN";
+     */
+    private boolean csrf = true;
+
     @Getter
     @Setter
     public class LoginProperties {

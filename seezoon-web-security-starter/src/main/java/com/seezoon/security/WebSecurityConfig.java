@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -103,20 +104,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 需要添加不然spring boot 的跨域配置无效
         http.cors();
         // 安全头设置
-        http.headers().defaultsDisabled()// 关闭默认
+        HeadersConfigurer<HttpSecurity> httpSecurityHeadersConfigurer = http.headers().defaultsDisabled()// 关闭默认
                 // 浏览器根据respone content type 格式解析资源
                 .contentTypeOptions()
                 // xss 攻击，限制有限，还是需要通过过滤请求参数，该框架已做
                 .and().xssProtection()
                 // 同域名可以通过frame
-                .and().frameOptions().sameOrigin()
-                // CSRF 攻击
-                // respone cookie name XSRF-TOKEN
-                // requst param _csrf or below;
-                // request head HEADER_NAME = "X-CSRF-TOKEN";
-                // CsrfFilter 默认实现类是这个，不拦截get请求
-                .and().csrf().ignoringAntMatchers(PUBLIC_ANT_PATH, LOGIN_URL)
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());// .disable();
+                .and().frameOptions().sameOrigin();
+        // CSRF 攻击
+        // respone cookie name XSRF-TOKEN
+        // requst param _csrf or below;
+        // request head HEADER_NAME = "X-CSRF-TOKEN";
+        // CsrfFilter 默认实现类是这个，不拦截get请求
+        if (seezoonSecurityProperties.isCsrf()) {
+            httpSecurityHeadersConfigurer.and().csrf().ignoringAntMatchers(PUBLIC_ANT_PATH, LOGIN_URL)
+                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+        } else {
+            httpSecurityHeadersConfigurer.and().csrf().disable();
+        }
+
+
     }
 
     /**

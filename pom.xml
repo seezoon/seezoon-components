@@ -107,7 +107,7 @@
     <profiles>
         <profile>
             <!-- setting 中配置账号  -->
-            <!-- 部署中心库  mvn deploy -P ossrh -->
+            <!-- 部署中心库  mvn clean deploy -P ossrh -->
             <id>ossrh</id>
             <distributionManagement>
                 <snapshotRepository>

@@ -115,10 +115,10 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
                 t.setId((PK) IdGen.uuid());
             }
             if (null == t.getCreateBy()) {
-                t.setCreateBy(UserContextLoader.getInstance().getUserId());
+                t.setCreateBy(UserContextLoader.getInstance().getId());
             }
             if (null == t.getUpdateBy()) {
-                t.setUpdateBy(UserContextLoader.getInstance().getUserId());
+                t.setUpdateBy(UserContextLoader.getInstance().getId());
             }
             t.setCreateTime(new Date());
             t.setUpdateTime(t.getCreateTime());
@@ -135,7 +135,7 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
     public int updateSelective(@NotNull T record) {
         record.setUpdateTime(new Date());
         if (null == record.getUpdateBy()) {
-            record.setUpdateBy(UserContextLoader.getInstance().getUserId());
+            record.setUpdateBy(UserContextLoader.getInstance().getId());
         }
         return this.d.updateByPrimaryKeySelective(record);
     }
@@ -153,7 +153,7 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
     public int update(@NotNull T record) {
         record.setUpdateTime(new Date());
         if (null == record.getUpdateBy()) {
-            record.setUpdateBy(UserContextLoader.getInstance().getUserId());
+            record.setUpdateBy(UserContextLoader.getInstance().getId());
         }
         return this.d.updateByPrimaryKey(record);
     }
