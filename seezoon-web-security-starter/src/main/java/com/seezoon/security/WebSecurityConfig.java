@@ -59,8 +59,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static final String[] STATIC_RESOURCES = {"/**/*.html", "/**/*.js", "/**/*.css", "/**/*.ico", "/**/*.png",
-            "/**/*.jpg"};
     // public static final String[] DOC_API = {"/swagger-resources/**", "/**/api-docs"};
     private static final String DEFAULT_REMEMBER_ME_NAME = "rememberMe";
     private static final String PUBLIC_ANT_PATH = "/public/**";
@@ -147,7 +145,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 按需忽略
-        web.ignoring().antMatchers(STATIC_RESOURCES);
+        web.ignoring().antMatchers(seezoonSecurityProperties.getStaticResources());
     }
 
     /**

@@ -22,6 +22,11 @@ public class SeezoonSecurityProperties {
      * request head HEADER_NAME = "X-CSRF-TOKEN";
      */
     private boolean csrf = true;
+    /**
+     * 跳过资源路径，AntPathRequestMatcher 语法
+     */
+    private String[] staticResources = new String[]{"/**/*.html", "/**/*.js", "/**/*.css", "/**/*.ico", "/**/*.png",
+            "/**/*.jpg", "/**/*.svg", "/**/*.woff"};
 
     @Getter
     @Setter
