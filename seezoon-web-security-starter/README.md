@@ -7,7 +7,7 @@
 默认依赖redis，适合简单应用，如果不需要redis
 
 ```java
-@SpringBootApplication(exclude = {SeezoonRedisAutoConfiguration.class}
+@SpringBootApplication(exclude = {SeezoonRedisAutoConfiguration.class, RedisAutoConfiguration.class}
 ```
 
 ```xml
