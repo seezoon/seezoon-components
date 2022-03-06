@@ -21,6 +21,7 @@
             <groupId>com.seezoon</groupId>
             <artifactId>web-spring-boot-starter</artifactId>
         </dependency>
+        <!-- 如果不要依赖 redis 则可以exclude auto configuration-->
         <dependency>
             <groupId>com.seezoon</groupId>
             <artifactId>redis-spring-boot-starter</artifactId>
@@ -29,6 +30,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!-- 如果不要依赖spring sesion redis 则可以exclude-->
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
@@ -58,6 +60,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 

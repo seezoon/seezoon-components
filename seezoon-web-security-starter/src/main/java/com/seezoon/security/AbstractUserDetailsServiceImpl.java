@@ -1,7 +1,8 @@
 package com.seezoon.security;
 
+import com.seezoon.security.constant.Constants;
 import com.seezoon.security.constant.LockType;
-import java.io.Serializable;
+import com.seezoon.security.lock.LoginSecurityService;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public abstract class AbstractUserDetailsServiceImpl implements UserDetailsService {
 
     private final static String LOGIN_TYPE = "loginType";
-    private final static String LOGIN_PASSWORD = "password";
     @Autowired
     private LoginSecurityService loginSecurityService;
 
@@ -46,7 +46,7 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
         }
         // 获取登录标识
         final String loginType = request.getParameter(LOGIN_TYPE);
-        final String password = request.getParameter(LOGIN_PASSWORD);
+        final String password = request.getParameter(Constants.DEFAULT_LOGIN_PASSWORD);
 
         return this.getSeezoonUserDetails(request, loginType, username, password);
     }
@@ -58,11 +58,10 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
      * @param loginType
      * @param username
      * @param password
-     * @param <T>
      * @return
      */
-    public abstract <T extends Serializable> SeezoonUserDetails<T> getSeezoonUserDetails(HttpServletRequest request,
-            String loginType, String username, String password);
+    public abstract SeezoonUserDetails<User> getSeezoonUserDetails(HttpServletRequest request, String loginType,
+            String username, String password);
 
 
 }

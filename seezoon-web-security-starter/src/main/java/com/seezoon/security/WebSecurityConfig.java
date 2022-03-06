@@ -1,13 +1,16 @@
 package com.seezoon.security;
 
 import com.seezoon.security.autoconfigure.SeezoonSecurityProperties;
+import com.seezoon.security.constant.Constants;
 import com.seezoon.security.handler.AccessDeniedHandler;
 import com.seezoon.security.handler.AjaxAuthenticationFailureHandler;
 import com.seezoon.security.handler.AjaxAuthenticationSuccessHandler;
 import com.seezoon.security.handler.AjaxLogoutSuccessHandler;
+import com.seezoon.security.lock.LoginSecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,6 +22,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer.ConcurrencyControlConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -65,17 +69,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_URL = "/login";
     private static final String LOGIN_OUT_URL = "/logout";
 
+    private final LoginSecurityService loginSecurityService;
     private final SeezoonSecurityProperties seezoonSecurityProperties;
     private final UserDetailsService userDetailsService;
-    private final FindByIndexNameSessionRepository sessionRepository;
+    private final ApplicationContext applicationContext;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 需要认证和授权的请求配置
         http.authorizeRequests().antMatchers(PUBLIC_ANT_PATH).permitAll().anyRequest().authenticated();
         // 自带username filter provider 处理机制
-        http.formLogin().loginProcessingUrl(LOGIN_URL).successHandler(ajaxAuthenticationSuccessHandler())
-                .failureHandler(ajaxAuthenticationFailureHandler());
+        http.formLogin().usernameParameter(Constants.DEFAULT_USER_NAME)
+                .passwordParameter(Constants.DEFAULT_LOGIN_PASSWORD).loginProcessingUrl(LOGIN_URL)
+                .successHandler(ajaxAuthenticationSuccessHandler()).failureHandler(ajaxAuthenticationFailureHandler());
 
         // 以下为公共逻辑 如果要扩展登录方式，只需要添加类似UsernamePasswordAuthenticationFilter-> DaoAuthenticationProvider 这种整套逻辑
         // 登出处理
@@ -87,10 +93,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
         if (seezoonSecurityProperties.getLogin().isConcurrentSessionControlEnabled()) {
             // seesion 管理 一个账号登录一次，maxSessionsPreventsLogin=false后面的挤掉前面的,true直接报错,需要添加下方httpSessionEventPublisher
-            http.sessionManagement().maximumSessions(seezoonSecurityProperties.getLogin().getMaximumSessions())
-                    .maxSessionsPreventsLogin(seezoonSecurityProperties.getLogin().isMaxSessionsPreventsLogin())
-                    // 不使用spring session 不需要指定，默认是内存逻辑
-                    .sessionRegistry(new SpringSessionBackedSessionRegistry<>(sessionRepository));
+            ConcurrencyControlConfigurer concurrencyControlConfigurer = http.sessionManagement()
+                    .maximumSessions(seezoonSecurityProperties.getLogin().getMaximumSessions())
+                    .maxSessionsPreventsLogin(seezoonSecurityProperties.getLogin().isMaxSessionsPreventsLogin());
+            if (applicationContext.containsBean("sessionRepository")) {
+                concurrencyControlConfigurer
+                        // 不使用spring session 不需要指定，默认是内存逻辑
+                        .sessionRegistry(new SpringSessionBackedSessionRegistry<>(applicationContext
+                                .getBean("sessionRepository", FindByIndexNameSessionRepository.class)));
+            }
         }
 
         // remember 采用默认解密前端remember-cookie
@@ -174,7 +185,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler() {
-        return new AjaxAuthenticationSuccessHandler();
+        return new AjaxAuthenticationSuccessHandler(loginSecurityService);
     }
 
     @Bean
@@ -184,6 +195,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler() {
-        return new AjaxAuthenticationFailureHandler();
+        return new AjaxAuthenticationFailureHandler(loginSecurityService);
     }
 }

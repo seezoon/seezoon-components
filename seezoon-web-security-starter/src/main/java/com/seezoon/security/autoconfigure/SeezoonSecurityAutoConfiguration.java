@@ -1,17 +1,19 @@
 package com.seezoon.security.autoconfigure;
 
 import com.seezoon.redis.autoconfigure.SeezoonRedisAutoConfiguration;
-import com.seezoon.security.LoginSecurityService;
 import com.seezoon.security.WebSecurityConfig;
-import javax.annotation.Resource;
+import com.seezoon.security.lock.LoginSecurityService;
+import com.seezoon.security.lock.NoneLoginSecurityServiceImpl;
+import com.seezoon.security.lock.RedisLoginSecurityServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 @AutoConfigureAfter(SeezoonRedisAutoConfiguration.class)
@@ -21,11 +23,14 @@ import org.springframework.data.redis.core.ValueOperations;
 @Import(WebSecurityConfig.class)
 public class SeezoonSecurityAutoConfiguration {
 
-    @Resource(name = "redisTemplate")
-    private ValueOperations<String, Integer> valueOperations;
-
     @Bean
-    public LoginSecurityService loginSecurityService(SeezoonSecurityProperties seezoonSecurityProperties) {
-        return new LoginSecurityService(seezoonSecurityProperties, valueOperations);
+    public LoginSecurityService loginSecurityService(ApplicationContext context,
+            SeezoonSecurityProperties seezoonSecurityProperties) {
+        if (context.containsBean("redisTemplate")) {
+
+            return new RedisLoginSecurityServiceImpl(seezoonSecurityProperties,
+                    context.getBean("redisTemplate", RedisTemplate.class).opsForValue());
+        }
+        return new NoneLoginSecurityServiceImpl();
     }
 }

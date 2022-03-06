@@ -32,8 +32,17 @@ public class SeezoonSecurityProperties {
     @Setter
     public class LoginProperties {
 
+        /**
+         * 登录错误锁定开关，依赖redis
+         */
         private boolean loginErrorLock = true;
+        /**
+         * -1 不限制
+         */
         private Integer lockPasswdFailTimes = 5;
+        /**
+         * -1 不限制
+         */
         private Integer lockIpFailTimes = 20;
         private Duration lockTime = Duration.ofDays(1);
 

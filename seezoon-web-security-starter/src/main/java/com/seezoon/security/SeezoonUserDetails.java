@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author hdf
  */
 @RequiredArgsConstructor
-public class SeezoonUserDetails<T> implements UserDetails {
+public class SeezoonUserDetails<T extends User> implements UserDetails {
 
     private static final long serialVersionUID = -1;
 

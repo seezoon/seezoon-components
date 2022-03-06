@@ -1,10 +1,6 @@
-package com.seezoon.security;
+package com.seezoon.security.lock;
 
-import com.seezoon.core.service.AbstractBaseService;
 import com.seezoon.security.autoconfigure.SeezoonSecurityProperties;
-import com.seezoon.security.lock.IpLockStrategy;
-import com.seezoon.security.lock.LockStrategy;
-import com.seezoon.security.lock.UsernameLockStrategy;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -14,7 +10,7 @@ import org.springframework.data.redis.core.ValueOperations;
  * @author hdf
  */
 @RequiredArgsConstructor
-public class LoginSecurityService extends AbstractBaseService implements InitializingBean {
+public class RedisLoginSecurityServiceImpl implements LoginSecurityService, InitializingBean {
 
     private final SeezoonSecurityProperties seezoonSecurityProperties;
     private final ValueOperations<String, Integer> valueOperations;
@@ -44,10 +40,12 @@ public class LoginSecurityService extends AbstractBaseService implements Initial
         }
     }
 
+    @Override
     public LockStrategy getUsernameLockStrategy() {
         return usernameLockStrategy;
     }
 
+    @Override
     public LockStrategy getIpLockStrategy() {
         return ipLockStrategy;
     }

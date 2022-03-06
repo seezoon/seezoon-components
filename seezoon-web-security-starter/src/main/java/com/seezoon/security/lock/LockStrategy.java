@@ -5,6 +5,8 @@ package com.seezoon.security.lock;
  */
 public interface LockStrategy {
 
+    int UN_LIMIT = -1;
+
     long increment(String key);
 
     boolean isLocked(String key);

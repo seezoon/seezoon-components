@@ -38,7 +38,7 @@ public abstract class AbstractLockStrategy implements LockStrategy {
         checkKey(key);
         String wrappedKey = wrapKey(key);
         Integer failCnt = valueOperations.get(wrappedKey);
-        if (null != failCnt && failCnt >= lockFailTimes) {
+        if (null != failCnt && failCnt >= lockFailTimes && lockFailTimes != LockStrategy.UN_LIMIT) {
             return true;
         }
         return false;
