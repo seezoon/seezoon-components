@@ -43,6 +43,7 @@
         hot load,for idea must set
         1.File-Settings-Compiler-Build Project automatically
         2.Compiler autoMake allow when app running = true
+        打包时候排除了，如果是spring maven 插件打包则自动处理了
         -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -41,6 +41,9 @@
             <useProjectArtifact>true</useProjectArtifact>
             <outputDirectory>lib</outputDirectory>
             <fileMode>0755</fileMode>
+            <excludes>
+                <exclude>org.springframework.boot:spring-boot-devtools</exclude>
+            </excludes>
         </dependencySet>
     </dependencySets>
 </assembly>
