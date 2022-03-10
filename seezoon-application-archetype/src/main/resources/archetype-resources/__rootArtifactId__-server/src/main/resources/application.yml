@@ -1,4 +1,4 @@
-# 环境标识，开发环境有意义，测试及生产无意义,作为打印标识可以自己定义如:test,prod,uat
+# 环境标识，开发环境有意义，如果觉得污染可以IDEA中启动时候加参数
 spring:
   profiles:
     active: local
