@@ -132,11 +132,10 @@ EOF
 
 supervise() {
   log=${LOG_PATH}/supervior.log
-  time=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "=============== ${time} ===============" >>${log}
-
   running=$(pidRunning)
   if [ ${running} -eq 0 ]; then
+    time=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "=============== ${time} ===============" >>${log}
     echo "${APP_NAME} not running， now start a new process." >>${log}
     start
   fi

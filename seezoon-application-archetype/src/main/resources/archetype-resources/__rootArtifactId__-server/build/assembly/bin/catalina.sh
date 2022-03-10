@@ -23,7 +23,7 @@ start() {
   if [ -n "${JAVA_OPTS}" ]; then
     echo "JAVA_OPTS=${JAVA_OPTS}"
   fi
-  # spring.config.additional-location 优先级更高，classpath 路径下多个只会取一个application.yml
+  # spring.config.additional-location 优先级更高，classpath:/ 路径下多个只会取一个application.yml
   SERVER_OTPS="${SERVER_OTPS} --spring.config.additional-location=${CONF_DIR}/ --spring.pid.file=${PID_FILE}"
   echo "SERVER_OTPS=${SERVER_OTPS}"
 
@@ -132,11 +132,10 @@ EOF
 
 supervise() {
   log=${LOG_PATH}/supervior.log
-  time=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "=============== ${time} ===============" >>${log}
-
   running=$(pidRunning)
   if [ ${running} -eq 0 ]; then
+    time=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "=============== ${time} ===============" >>${log}
     echo "${APP_NAME} not running， now start a new process." >>${log}
     start
   fi
