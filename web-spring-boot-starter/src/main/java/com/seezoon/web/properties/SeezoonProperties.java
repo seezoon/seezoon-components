@@ -23,6 +23,10 @@ public class SeezoonProperties {
     @Setter
     public static class HttpProperties {
 
+        /**
+         * 开启
+         */
+        private boolean enable = true;
         // 连接超时 ms
         private int connectTimeout = 6 * 1000;
         // 获取数据超时 ms

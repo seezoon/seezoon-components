@@ -15,6 +15,7 @@ import org.apache.http.impl.client.StandardHttpRequestRetryHandler;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -64,6 +65,7 @@ public class RestTemplateCustomConfiguration {
      */
     @Primary
     @Bean
+    @ConditionalOnProperty(name = "seezoon.http.enable", havingValue = "true")
     public RestTemplate restTemplate() {
         ClientHttpRequestFactory factory = clientHttpRequestFactory(null);
         RestTemplate restTemplate = new RestTemplate(factory);
