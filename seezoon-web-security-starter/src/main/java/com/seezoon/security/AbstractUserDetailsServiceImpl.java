@@ -3,8 +3,10 @@ package com.seezoon.security;
 import com.seezoon.security.constant.Constants;
 import com.seezoon.security.constant.LockType;
 import com.seezoon.security.lock.LoginSecurityService;
+import com.seezoon.web.i18n.Message;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.LocaleResolver;
 
 /**
  * 用户加载逻辑
@@ -29,6 +32,8 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
     private final static String LOCALE = "locale";
     @Autowired
     private LoginSecurityService loginSecurityService;
+    @Autowired
+    private LocaleResolver localeResolver;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -37,9 +42,12 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
         }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getRequest();
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getResponse();
         final String locale = request.getParameter(LOCALE);
-        LocaleContextHolder
-                .setLocale(StringUtils.isEmpty(locale) ? Locale.SIMPLIFIED_CHINESE : LocaleUtils.toLocale(locale));
+        Locale requestLocale = StringUtils.isEmpty(locale) ? Message.DEFAULT_LOCALE : LocaleUtils.toLocale(locale);
+        localeResolver.setLocale(request, response, requestLocale);
+        LocaleContextHolder.setLocale(requestLocale);
 
         if (loginSecurityService.lock()) {
             String remoteIp = IpUtil.getRemoteIp(request);

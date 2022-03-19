@@ -1,7 +1,7 @@
 package com.seezoon.web.autoconfigure;
 
+import com.seezoon.web.i18n.Message;
 import com.seezoon.web.properties.SeezoonProperties;
-import java.util.Locale;
 import javax.servlet.ServletRequestListener;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
@@ -44,7 +44,7 @@ public class SeezoonWebAutoConfiguration {
     @Primary
     public LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
+        localeResolver.setDefaultLocale(Message.DEFAULT_LOCALE);
         return localeResolver;
     }
 }
