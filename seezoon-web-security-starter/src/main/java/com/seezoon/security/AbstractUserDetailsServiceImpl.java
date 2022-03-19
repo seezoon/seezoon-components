@@ -3,11 +3,10 @@ package com.seezoon.security;
 import com.seezoon.security.constant.Constants;
 import com.seezoon.security.constant.LockType;
 import com.seezoon.security.lock.LoginSecurityService;
-import com.seezoon.web.i18n.Message;
+import com.seezoon.web.i18n.LocaleFactory;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -45,7 +44,7 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getResponse();
         final String locale = request.getParameter(LOCALE);
-        Locale requestLocale = StringUtils.isEmpty(locale) ? Message.DEFAULT_LOCALE : LocaleUtils.toLocale(locale);
+        final Locale requestLocale = LocaleFactory.create(locale);
         localeResolver.setLocale(request, response, requestLocale);
         LocaleContextHolder.setLocale(requestLocale);
 

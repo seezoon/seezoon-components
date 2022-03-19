@@ -13,7 +13,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
  */
 public class Message {
 
-    public final static Locale DEFAULT_LOCALE = Locale.SIMPLIFIED_CHINESE;
     static MessageSource messageSource = SpringContextHolder.getBean(MessageSource.class);
 
     /**
