@@ -46,26 +46,33 @@ public class AjaxAuthenticationFailureHandler extends AbstractJsonResponeHandler
         Throwable cause = exception.getCause() == null ? exception : exception.getCause();
 
         if (cause instanceof UsernameNotFoundException) {
-            result = Result.error(LoginCodeMsgBundle.BAD_CREDENTIALS);
+            result = Result.errorI18nWithDefaultMessage(LoginCodeMsgBundle.BAD_CREDENTIALS.code(),
+                    LoginCodeMsgBundle.BAD_CREDENTIALS.msg());
             loginResultMsg.setResult(LoginResult.USERNAME_NOT_FOUND);
         } else if (cause instanceof BadCredentialsException) {
-            result = Result.error(LoginCodeMsgBundle.BAD_CREDENTIALS);
+            result = Result.errorI18nWithDefaultMessage(LoginCodeMsgBundle.BAD_CREDENTIALS.code(),
+                    LoginCodeMsgBundle.BAD_CREDENTIALS.msg());
             loginResultMsg.setResult(LoginResult.PASSWD_ERROR);
             Optional.ofNullable(loginSecurityService.getUsernameLockStrategy()).ifPresent((s) -> s.increment(username));
             Optional.ofNullable(loginSecurityService.getIpLockStrategy()).ifPresent((s) -> s.increment(remoteIp));
         } else if (cause instanceof LockedException) {
             if (cause.getMessage().equals(LockType.USERNAME.name())) {
-                result = Result.error(LoginCodeMsgBundle.USERNAME_LOCKED);
+                result = Result.errorI18nWithDefaultMessage(LoginCodeMsgBundle.USERNAME_LOCKED.code(),
+                        LoginCodeMsgBundle.USERNAME_LOCKED.msg());
                 loginResultMsg.setResult(LoginResult.USERNAME_LOCKED);
             } else {
-                result = Result.error(LoginCodeMsgBundle.IP_LOCKED);
+                result = Result.errorI18nWithDefaultMessage(LoginCodeMsgBundle.IP_LOCKED.code(),
+                        LoginCodeMsgBundle.IP_LOCKED.msg());
                 loginResultMsg.setResult(LoginResult.IP_LOCKED);
             }
         } else if (cause instanceof DisabledException) {
-            result = Result.error(LoginCodeMsgBundle.DISABLED);
+            result = Result
+                    .errorI18nWithDefaultMessage(LoginCodeMsgBundle.DISABLED.code(), LoginCodeMsgBundle.DISABLED.msg());
             loginResultMsg.setResult(LoginResult.DISABLED);
         } else {
-            result = Result.error(LoginCodeMsgBundle.UNKOWN_LOGIN, exception.getMessage());
+            result = Result.errorI18nWithDefaultMessage(LoginCodeMsgBundle.UNKOWN_LOGIN.code(),
+                    String.format(LoginCodeMsgBundle.UNKOWN_LOGIN.msg(), exception.getMessage()),
+                    exception.getMessage());
             loginResultMsg.setResult(LoginResult.UNKOWN);
         }
         loginResultMsg.setUserId(SecurityUtils.ANONYMOUS_USER_ID);

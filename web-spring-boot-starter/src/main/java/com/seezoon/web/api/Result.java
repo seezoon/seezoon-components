@@ -1,5 +1,6 @@
 package com.seezoon.web.api;
 
+import com.seezoon.web.i18n.Message;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,6 +55,32 @@ public class Result<T> {
         result.setData(data);
         return result;
     }
+
+    /**
+     * 通常从国际化资源文件中获取
+     *
+     * @param code
+     * @param args
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> errorI18n(String code, Object... args) {
+        return new Result<>(code, Message.get(code, args));
+    }
+
+    /**
+     * 通常从国际化资源文件中获取
+     *
+     * @param code
+     * @param defaultMessage not support format
+     * @param args
+     * @param <T>
+     * @return
+     */
+    public static <T> Result<T> errorI18nWithDefaultMessage(String code, String defaultMessage, Object... args) {
+        return new Result<>(code, Message.getWithDefault(code, defaultMessage, args));
+    }
+
 
     public static <T> Result<T> error(String msg) {
         Result<T> result = new Result<T>(DefaultCodeMsgBundle.FAIL.code(), msg);

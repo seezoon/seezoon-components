@@ -3,9 +3,12 @@ package com.seezoon.security;
 import com.seezoon.security.constant.Constants;
 import com.seezoon.security.constant.LockType;
 import com.seezoon.security.lock.LoginSecurityService;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +23,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public abstract class AbstractUserDetailsServiceImpl implements UserDetailsService {
 
+    //登录类型 可以空
     private final static String LOGIN_TYPE = "loginType";
+    // 语言 可以空，spring 登录时候的拦截器早于国际化 所以登录时候如果指定
+    private final static String LOCALE = "locale";
     @Autowired
     private LoginSecurityService loginSecurityService;
 
@@ -31,6 +37,9 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
         }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getRequest();
+        final String locale = request.getParameter(LOCALE);
+        LocaleContextHolder
+                .setLocale(StringUtils.isEmpty(locale) ? Locale.SIMPLIFIED_CHINESE : LocaleUtils.toLocale(locale));
 
         if (loginSecurityService.lock()) {
             String remoteIp = IpUtil.getRemoteIp(request);

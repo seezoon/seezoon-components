@@ -11,11 +11,11 @@ import com.seezoon.web.api.DefaultCodeMsgBundle;
  */
 public class LoginCodeMsgBundle extends DefaultCodeMsgBundle {
 
-    public static final CodeMsg UNKOWN_LOGIN = new CodeMsg("80000", "错误：%s");
-    public static final CodeMsg USERNAME_NOT_FOUND = new CodeMsg("80001", "账户密码错误,连续错误5次将锁定24小时");
-    public static final CodeMsg BAD_CREDENTIALS = new CodeMsg("80002", "账户密码错误,连续错误5次将锁定24小时");
-    public static final CodeMsg USERNAME_LOCKED = new CodeMsg("80003", "账户已被锁定");
-    public static final CodeMsg IP_LOCKED = new CodeMsg("80004", "IP已被锁定");
-    public static final CodeMsg DISABLED = new CodeMsg("80005", "账户已被禁用");
+    public static final CodeMsg UNKOWN_LOGIN = new CodeMsg("UNKOWN_LOGIN", "错误：%s");
+    public static final CodeMsg USERNAME_NOT_FOUND = new CodeMsg("USERNAME_NOT_FOUND", "账户密码错误,连续错误5次将锁定24小时");
+    public static final CodeMsg BAD_CREDENTIALS = new CodeMsg("BAD_CREDENTIALS", "账户密码错误,连续错误5次将锁定24小时");
+    public static final CodeMsg USERNAME_LOCKED = new CodeMsg("USERNAME_LOCKED", "账户已被锁定");
+    public static final CodeMsg IP_LOCKED = new CodeMsg("IP_LOCKED", "IP已被锁定");
+    public static final CodeMsg DISABLED = new CodeMsg("DISABLED", "账户已被禁用");
 
 }

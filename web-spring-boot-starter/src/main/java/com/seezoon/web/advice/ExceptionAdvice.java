@@ -38,12 +38,14 @@ public class ExceptionAdvice {
             ConstraintViolationException.class, MethodArgumentTypeMismatchException.class,
             HttpMessageNotReadableException.class})
     public Result parameterInvalidException(Exception e) {
-        return Result.error(DefaultCodeMsgBundle.PARAM_INVALID, e.getMessage());
+        return Result.errorI18nWithDefaultMessage(DefaultCodeMsgBundle.PARAM_INVALID.code(),
+                String.format(DefaultCodeMsgBundle.PARAM_INVALID.msg(), e.getMessage()), e.getMessage());
     }
 
     @ExceptionHandler({BindException.class})
     public Result bindException(BindException e) {
-        return Result.error(DefaultCodeMsgBundle.PARAM_BIND_ERROR, e.getMessage());
+        return Result.errorI18nWithDefaultMessage(DefaultCodeMsgBundle.PARAM_BIND_ERROR.code(),
+                String.format(DefaultCodeMsgBundle.PARAM_BIND_ERROR.msg(), e.getMessage()), e.getMessage());
     }
 
     /**
@@ -54,17 +56,18 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler({IllegalArgumentException.class})
     public Result illegalArgumentException(IllegalArgumentException e) {
-        return Result.error(DefaultCodeMsgBundle.PARAM_INVALID, e.getMessage());
+        return Result.errorI18nWithDefaultMessage(DefaultCodeMsgBundle.PARAM_INVALID.code(),
+                String.format(DefaultCodeMsgBundle.PARAM_INVALID.msg(), e.getMessage()), e.getMessage());
     }
 
     @ExceptionHandler(BizException.class)
     public Result businessException(BizException e) {
-        return Result.error(e.getCode(), e.getMessage());
+        return Result.errorI18nWithDefaultMessage(e.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(SysException.class)
     public Result sysException(SysException e) {
-        return Result.error(e.getCode(), e.getMessage());
+        return Result.errorI18nWithDefaultMessage(e.getCode(), e.getMessage());
     }
 
     /**
@@ -74,8 +77,9 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public Result exception(Exception e) throws Exception {
+    public Result exception(Exception e) {
         logger.error("global exception ", e);
-        return Result.error(DefaultCodeMsgBundle.UNKNOWN, e.getMessage());
+        return Result.errorI18nWithDefaultMessage(DefaultCodeMsgBundle.UNKNOWN.code(),
+                String.format(DefaultCodeMsgBundle.UNKNOWN.msg(), e.getMessage()), e.getMessage());
     }
 }
