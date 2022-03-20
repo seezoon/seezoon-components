@@ -1,5 +1,7 @@
 package com.seezoon.security;
 
+import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -23,4 +25,19 @@ public class SecurityUtils {
         return null;
     }
 
+
+    public static boolean isSuperAdmin(Serializable userId) {
+        if (Objects.equals(userId, SUPER_ADMIN_USER_ID)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isSuperAdmin() {
+        final User userInfo = getUserInfo();
+        if (null != userInfo && Objects.equals(userInfo.getUserId(), SUPER_ADMIN_USER_ID)) {
+            return true;
+        }
+        return false;
+    }
 }
