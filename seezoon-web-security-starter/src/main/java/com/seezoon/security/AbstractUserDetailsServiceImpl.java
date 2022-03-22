@@ -43,7 +43,11 @@ public abstract class AbstractUserDetailsServiceImpl implements UserDetailsServi
                 .getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getResponse();
-        final String locale = request.getParameter(LOCALE);
+        String locale = request.getParameter(LOCALE);
+        // 主要是记住密码时候自动登录需要
+        if (StringUtils.isEmpty(locale)) {
+            locale = request.getHeader(LOCALE);
+        }
         final Locale requestLocale = LocaleFactory.create(locale);
         localeResolver.setLocale(request, response, requestLocale);
         LocaleContextHolder.setLocale(requestLocale);
