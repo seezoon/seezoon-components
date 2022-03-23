@@ -1,5 +1,6 @@
 package com.seezoon.mybatis.repository.po;
 
+import com.seezoon.mybatis.repository.constants.Constants;
 import java.util.Date;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -33,7 +34,7 @@ public class BasePO<PK> {
      */
     @Max(127)
     @Min(-128)
-    private Integer status;
+    private Integer status = Constants.NORMAL;
     /**
      * 保存方法自动处理
      * 创建人
