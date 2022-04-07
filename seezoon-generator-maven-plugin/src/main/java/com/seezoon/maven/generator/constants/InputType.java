@@ -12,4 +12,6 @@ public enum InputType {
     DATE,
 
     DATETIME,
+
+    TIME
 }

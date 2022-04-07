@@ -3,17 +3,11 @@
 #set( $symbol_escape = '\' )
 package ${package}.domain.sys.repository.po;
 
-import java.util.Date;
 
+import com.seezoon.mybatis.repository.po.BasePO;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.seezoon.mybatis.repository.po.BasePO;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,38 +15,44 @@ import lombok.ToString;
 /**
  * 用户信息
  *
- * @author seezoon-generator 2022年1月28日 上午12:00:52
+ * @author seezoon-generator 2022年4月7日 下午3:06:40
  */
 @Getter
 @Setter
 @ToString
 public class SysUserPO extends BasePO<Integer> {
 
+    // 用户编号
     @NotNull
     private Integer userId;
 
+    // 登录名
     @NotBlank
     @Size(max = 50)
     private String username;
 
+    // 密码
     @NotBlank
     @Size(max = 100)
     private String password;
 
+    // 姓名
     @NotBlank
     @Size(max = 50)
     private String name;
 
+    // 手机
     @NotBlank
     @Size(max = 20)
     private String mobile;
 
+    // 头像
     @Size(max = 100)
     private String photo;
 
+    // 邮件
     @Size(max = 50)
     private String email;
-
 
     @Override
     public Integer getId() {

@@ -8,8 +8,8 @@ import com.seezoon.mybatis.repository.po.AbstractPOQueryCondition;
 import com.seezoon.mybatis.repository.po.BasePO;
 import com.seezoon.mybatis.repository.spi.UserContextLoader;
 import com.seezoon.mybatis.repository.utils.IdGen;
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -120,7 +120,7 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
             if (null == t.getUpdateBy()) {
                 t.setUpdateBy(UserContextLoader.getInstance().getId());
             }
-            t.setCreateTime(new Date());
+            t.setCreateTime(LocalDateTime.now());
             t.setUpdateTime(t.getCreateTime());
         });
         return this.d.insert(records);
@@ -133,7 +133,7 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
      * @return
      */
     public int updateSelective(@NotNull T record) {
-        record.setUpdateTime(new Date());
+        record.setUpdateTime(LocalDateTime.now());
         if (null == record.getUpdateBy()) {
             record.setUpdateBy(UserContextLoader.getInstance().getId());
         }
@@ -151,7 +151,7 @@ public abstract class AbstractCrudRepository<D extends CrudMapper<T, PK>, T exte
      * @return
      */
     public int update(@NotNull T record) {
-        record.setUpdateTime(new Date());
+        record.setUpdateTime(LocalDateTime.now());
         if (null == record.getUpdateBy()) {
             record.setUpdateBy(UserContextLoader.getInstance().getId());
         }

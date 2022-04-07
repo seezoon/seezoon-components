@@ -1,7 +1,8 @@
 package com.seezoon.mybatis.repository.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.seezoon.mybatis.repository.constants.Constants;
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -44,7 +45,8 @@ public class BasePO<PK> {
      * 保存方法自动处理
      * 创建时间
      */
-    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
     /**
      * 更新方法自动处理
      * 更新人
@@ -54,7 +56,8 @@ public class BasePO<PK> {
      * 更新方法自动处理
      * 更新时间
      */
-    private Date updateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
 
     @Size(max = 255)
     private String remarks;

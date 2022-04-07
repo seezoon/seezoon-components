@@ -9,13 +9,8 @@
     <property name="LOG_HOME" value="${symbol_dollar}{LOG_PATH:-./logs}"/>
     <property name="LOG_FILE" value="seezoon"/>
     <property name="LOG_PATTERN"
-            value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${symbol_dollar}{LOG_LEVEL_PATTERN:-%5p} %logger{10} - %msg%n"/>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${symbol_dollar}{LOG_PATTERN}</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
+            value="${symbol_dollar}{FILE_LOG_PATTERN:-%d{${symbol_dollar}{LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${symbol_dollar}{LOG_LEVEL_PATTERN:-%5p} ${symbol_dollar}{PID:- } --- [%t] %-40.40logger{39} : %m%n${symbol_dollar}{LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 指定日志文件的名称 -->
         <file>${symbol_dollar}{LOG_HOME}/${symbol_dollar}{LOG_FILE}.log</file>

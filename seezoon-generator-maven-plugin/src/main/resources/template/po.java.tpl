@@ -4,18 +4,15 @@ package ${baseRepositoryPackage}.${moduleName}.repository.po;
 import java.math.BigDecimal;
 </#if>
 <#if importDate>
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 </#if>
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-<#if importDate>
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-</#if>
 import com.seezoon.mybatis.repository.po.BasePO;
 
 import lombok.Getter;
@@ -34,6 +31,11 @@ public class ${classNamePO} extends BasePO<${pkPlan.dataType.javaType()}> {
 
 <#list columnPlans as columnPlan>
    <#if !columnPlan.defaultField>
+      <#if columnPlan.fieldName?? && columnPlan.fieldName?length != 0>
+     /**
+      * ${columnPlan.fieldName!}
+      */
+      </#if>
       <#if !columnPlan.nullable>
         <#if columnPlan.stringType>
     @NotBlank
@@ -44,13 +46,6 @@ public class ${classNamePO} extends BasePO<${pkPlan.dataType.javaType()}> {
       <#if columnPlan.stringType>
     @Size(max = ${columnPlan.maxLength?c})
       </#if>
-        <#if columnPlan.inputType.name() == "DATE">
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-        <#elseif columnPlan.inputType.name() == "DATETIME">
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        </#if>
     private ${columnPlan.dataType.javaType()} ${columnPlan.javaFieldName};
 
    </#if>

@@ -1,18 +1,10 @@
 package ${baseRepositoryPackage}.${moduleName}.repository.po;
 
 <#if importDate>
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 </#if>
-
-<#list columnPlans as columnPlan>
-  <#if columnPlan.dataType.javaType() == "Date" && columnPlan.search>
-import org.springframework.format.annotation.DateTimeFormat;
-// DateTimeFormat 针对RequestBody 接收无效，实际会使用JsonFormat
-// DateTimeFormat 针对form表单时间格式化有效
-import com.fasterxml.jackson.annotation.JsonFormat;
-  <#break>
-  </#if>
-</#list>
 
 import com.seezoon.mybatis.repository.po.PagePOCondition;
 <#if sortable>
@@ -37,16 +29,11 @@ public class ${classNamePO}Condition extends PagePOCondition {
 
     <#list columnPlans as columnPlan>
         <#if columnPlan.search>
+      <#if columnPlan.fieldName?? && columnPlan.fieldName?length != 0>
     /**
      * ${columnPlan.fieldName!}
      */
-          <#if columnPlan.inputType.name() == "DATE">
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-          <#elseif columnPlan.inputType.name() == "DATETIME">
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-          </#if>
+      </#if>
     private ${columnPlan.dataType.javaType()} ${columnPlan.javaFieldName};
         </#if>
     </#list>

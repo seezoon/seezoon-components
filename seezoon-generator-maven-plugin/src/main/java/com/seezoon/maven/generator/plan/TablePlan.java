@@ -1,8 +1,10 @@
 package com.seezoon.maven.generator.plan;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +22,7 @@ public class TablePlan {
     // 如果不需要请置位空字符串
     public static final String DEFAULT_TABLE_ALIAS = "t";
     public static final String DEFAULT_TABLE_ALIAS_PREFIX =
-        StringUtils.isNotBlank(DEFAULT_TABLE_ALIAS) ? DEFAULT_TABLE_ALIAS + "." : "";
+            StringUtils.isNotBlank(DEFAULT_TABLE_ALIAS) ? DEFAULT_TABLE_ALIAS + "." : "";
 
     /**
      * sql mapper 生成所在路径
@@ -95,13 +97,15 @@ public class TablePlan {
     }
 
     public boolean isImportDate() {
-        return this.getColumnPlans().stream()
-            .anyMatch(columnPlan -> Date.class.getSimpleName().equals(columnPlan.getDataType().javaType()));
+        return this.getColumnPlans().stream().filter(v -> !v.isDefaultField()).anyMatch(
+                columnPlan -> LocalDateTime.class.getSimpleName().equals(columnPlan.getDataType().javaType())
+                        || LocalDate.class.getSimpleName().equals(columnPlan.getDataType().javaType())
+                        || LocalTime.class.getSimpleName().equals(columnPlan.getDataType().javaType()));
     }
 
     public boolean isImportBigDecimal() {
         return this.getColumnPlans().stream()
-            .anyMatch(columnPlan -> BigDecimal.class.getSimpleName().equals(columnPlan.getDataType().javaType()));
+                .anyMatch(columnPlan -> BigDecimal.class.getSimpleName().equals(columnPlan.getDataType().javaType()));
     }
 
     public boolean isHasSearch() {

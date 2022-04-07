@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.seezoon</groupId>
         <artifactId>seezoon-components</artifactId>
-        <version>1.0.3-SNAPSHOT</version>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>

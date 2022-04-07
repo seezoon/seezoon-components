@@ -56,9 +56,11 @@
 | seezoon.generate.db.username  | DB账号 |root |
 | seezoon.generate.db.password | DB密码 |无|
 | seezoon.generate.db.tables | 生成表，多个逗号分隔，如果xml中配置了tables则无效 |无|
+| seezoon.generate.db.table.prefix | 表前缀|无|
+| seezoon.generate.db.field.prefix | 字段前缀|无|
 | seezoon.generate.base.sqlmappper.path | sql文件根目录,如果自定义请注意mybatis的sql扫描路径，不建议改 |src/main/resources|
-| seezoon.generate.base.repository.package | 仓储类根路径 |${project.groupId}.domain|
-| seezoon.generate.base.controller.package | controller根路径 |${project.groupId}.interfaces|
+| seezoon.generate.base.repository.package | 仓储类根路径 |${project.groupId}.domain| |
+seezoon.generate.base.controller.package | controller根路径 |${project.groupId}.interfaces|
 
 ## 使用约定
 
@@ -86,8 +88,11 @@ CREATE TABLE `sys_demo`
     PRIMARY KEY (`id`),
     UNIQUE
         KEY `param_key` (`param_key`) USING BTREE,
-    KEY           `create_by` (`create_by`),
-    KEY           `create_date` (`create_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统参数';
+    KEY `create_by` (`create_by`),
+    KEY `create_date` (`create_time`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci COMMENT ='系统参数';
 
 ```

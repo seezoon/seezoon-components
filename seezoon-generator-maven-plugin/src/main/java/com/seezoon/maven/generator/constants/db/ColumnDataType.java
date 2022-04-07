@@ -1,8 +1,10 @@
 package com.seezoon.maven.generator.constants.db;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.util.Assert;
@@ -28,10 +30,16 @@ public enum ColumnDataType {
     DOUBLE("double", "DOUBLE", Double.class.getSimpleName()),
     FLOAT("float", "REAL", Float.class.getSimpleName()),
     // 导入时间
-    DATETIME("datetime", "TIMESTAMP", Date.class.getSimpleName()),
-    DATE("date", "DATE", Date.class.getSimpleName()),
-    TIME("time", "TIME", Date.class.getSimpleName()),
-    TIMESTAMP("timestamp", "TIMESTAMP", Date.class.getSimpleName()),
+    //DATETIME("datetime", "TIMESTAMP", Date.class.getSimpleName()),
+    //DATE("date", "DATE", Date.class.getSimpleName()),
+    //TIME("time", "TIME", Date.class.getSimpleName()),
+    //TIMESTAMP("timestamp", "TIMESTAMP", Date.class.getSimpleName()),
+
+    DATETIME("datetime", "TIMESTAMP", LocalDateTime.class.getSimpleName()),
+    DATE("date", "DATE", LocalDate.class.getSimpleName()),
+    TIME("time", "TIME", LocalTime.class.getSimpleName()),
+    TIMESTAMP("timestamp", "TIMESTAMP", LocalDateTime.class.getSimpleName()),
+
     // 导入BigDecimal
     DECIMAL("decimal", "DECIMAL", BigDecimal.class.getSimpleName()),
     NUMERIC("numeric", "DECIMAL", BigDecimal.class.getSimpleName()),

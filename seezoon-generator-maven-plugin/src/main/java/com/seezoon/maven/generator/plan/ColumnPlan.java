@@ -28,6 +28,10 @@ public class ColumnPlan implements Comparable<ColumnPlan> {
      */
     private String dbColumnName;
     /**
+     * 标准化候的字段名，如去除前缀
+     */
+    private String normalizedDbColumnNameName;
+    /**
      * 列中文名，默认是DB列备注
      */
     private String fieldName;
@@ -118,7 +122,7 @@ public class ColumnPlan implements Comparable<ColumnPlan> {
      * 是否默认字段,会在能忽略的场景忽略，比如默认字段
      */
     public boolean isDefaultField() {
-        return ArrayUtils.contains(DEFAULT_COLUMNS, this.getDbColumnName());
+        return ArrayUtils.contains(DEFAULT_COLUMNS, this.getNormalizedDbColumnNameName());
     }
 
     /**

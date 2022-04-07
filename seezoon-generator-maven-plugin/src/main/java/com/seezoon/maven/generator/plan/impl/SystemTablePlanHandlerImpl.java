@@ -14,7 +14,6 @@ import com.seezoon.maven.generator.plan.PkPlan;
 import com.seezoon.maven.generator.plan.TablePlan;
 import com.seezoon.maven.generator.plan.TablePlanHandler;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.CaseUtils;
@@ -85,6 +84,7 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
             // @formatter:off
             ColumnPlan columnPlan = ColumnPlan.builder()
                     .dbColumnName(v.getName())
+                    .normalizedDbColumnNameName(v.getNormalizedName())
                     .fieldName(v.getComment())
                     .columnKey(StringUtils.isNotEmpty(v.getColumnKey()) ? ColumnKey.valueOf(v.getColumnKey())
                             : ColumnKey.NONE)
@@ -103,27 +103,29 @@ public class SystemTablePlanHandlerImpl implements TablePlanHandler {
             // @formatter:on
             // 针对默认字段的处理
             if (columnPlan.isDefaultField()) {
-                if (DefaultColumns.id.name().equals(columnPlan.getDbColumnName())) {
+                if (DefaultColumns.id.name().equals(columnPlan.getNormalizedDbColumnNameName())) {
                     columnPlan.setInsert(false);
                     columnPlan.setUpdate(false);
-                } else if (DefaultColumns.status.name().equals(columnPlan.getDbColumnName())) {
-                } else if (DefaultColumns.create_time.name().equals(columnPlan.getDbColumnName())) {
+                } else if (DefaultColumns.status.name().equals(columnPlan.getNormalizedDbColumnNameName())) {
+                } else if (DefaultColumns.create_time.name().equals(columnPlan.getNormalizedDbColumnNameName())) {
                     columnPlan.setSortable(true);
                     columnPlan.setUpdate(false);
-                } else if (DefaultColumns.update_time.name().equals(columnPlan.getDbColumnName())) {
-                } else if (DefaultColumns.create_by.name().equals(columnPlan.getDbColumnName())) {
+                } else if (DefaultColumns.update_time.name().equals(columnPlan.getNormalizedDbColumnNameName())) {
+                } else if (DefaultColumns.create_by.name().equals(columnPlan.getNormalizedDbColumnNameName())) {
                     columnPlan.setUpdate(false);
-                } else if (DefaultColumns.update_by.name().equals(columnPlan.getDbColumnName())) {
-                } else if (DefaultColumns.remarks.name().equals(columnPlan.getDbColumnName())) {
+                } else if (DefaultColumns.update_by.name().equals(columnPlan.getNormalizedDbColumnNameName())) {
+                } else if (DefaultColumns.remarks.name().equals(columnPlan.getNormalizedDbColumnNameName())) {
                 }
             } else {
                 // 时间
-                if (Date.class.getSimpleName().equals(columnPlan.getDataType().javaType())) {
-                    if (ColumnDataType.DATE.dbType().equals(columnPlan.getDataType().dbType())) {
-                        columnPlan.setInputType(InputType.DATE);
-                    } else {
-                        columnPlan.setInputType(InputType.DATETIME);
-                    }
+                if (ColumnDataType.DATE.dbType().equals(columnPlan.getDataType().dbType())) {
+                    columnPlan.setInputType(InputType.DATE);
+                } else if (ColumnDataType.DATETIME.dbType().equals(columnPlan.getDataType().dbType())) {
+                    columnPlan.setInputType(InputType.DATETIME);
+                } else if (ColumnDataType.TIME.dbType().equals(columnPlan.getDataType().dbType())) {
+                    columnPlan.setInputType(InputType.TIME);
+                } else if (ColumnDataType.TIMESTAMP.dbType().equals(columnPlan.getDataType().dbType())) {
+                    columnPlan.setInputType(InputType.DATETIME);
                 }
                 // 有索引的
                 if ((ColumnKey.MUL.equals(columnPlan.getColumnKey()) || ColumnKey.UNI

@@ -8,7 +8,7 @@ import com.demo.domain.sys.repository.po.SysUserPO;
 
 /**
  * 用户信息
- * @author seezoon-generator 2022年1月28日 上午12:00:52
+ * @author seezoon-generator 2022年4月7日 下午3:06:40
  */
 @Repository
 @Mapper

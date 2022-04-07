@@ -41,13 +41,13 @@ public class GenerateMojo extends AbstractMojo {
     /**
      * 表前缀
      */
-    @Parameter(property = "fit.generate.db.table.prefix")
+    @Parameter(property = "seezoon.generate.db.table.prefix")
     private String tablePrefix;
 
     /**
      * 字段前缀
      */
-    @Parameter(property = "fit.generate.db.field.prefix")
+    @Parameter(property = "seezoon.generate.db.field.prefix")
     private String fieldPrefix;
 
     /**

@@ -1,6 +1,6 @@
 #!/bin/sh
 # revision project
-# ./revision.sh 1.0.0-SNAPSHOT
+# ./revision.sh 1.0.4-SNAPSHOT
 set -e
 version=$1
 if [ -z "$version" ]; then
