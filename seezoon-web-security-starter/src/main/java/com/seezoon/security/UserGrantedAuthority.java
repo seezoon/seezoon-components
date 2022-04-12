@@ -14,6 +14,8 @@ import org.springframework.util.Assert;
  * &#64;PreAuthorize("hasRole('admin')")
  * </code>
  *
+ * https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/html/el-access.html
+ *
  * @author hdf
  */
 public class UserGrantedAuthority implements GrantedAuthority {
