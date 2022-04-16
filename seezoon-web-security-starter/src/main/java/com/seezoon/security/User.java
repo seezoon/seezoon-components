@@ -2,7 +2,7 @@ package com.seezoon.security;
 
 import java.io.Serializable;
 
-public abstract class User implements Serializable {
+public class User implements Serializable {
 
     private Serializable userId;
 

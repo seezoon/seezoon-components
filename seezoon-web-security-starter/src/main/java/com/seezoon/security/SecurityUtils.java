@@ -25,7 +25,6 @@ public class SecurityUtils {
         return null;
     }
 
-
     public static boolean isSuperAdmin(Serializable userId) {
         if (Objects.equals(userId, SUPER_ADMIN_USER_ID)) {
             return true;
@@ -39,5 +38,10 @@ public class SecurityUtils {
             return true;
         }
         return false;
+    }
+
+    public static Serializable getUserId() {
+        User userInfo = Objects.requireNonNull(getUserInfo(), "user must login");
+        return userInfo.getUserId();
     }
 }
