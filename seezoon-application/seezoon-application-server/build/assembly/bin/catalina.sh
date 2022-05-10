@@ -91,21 +91,10 @@ health() {
   fi
 }
 
-# ---- 获取pid文件
+# ---- 获取pid
 getPid() {
-  if [ ! -f ${PID_FILE} ]; then
-    echo 0
-    return
-  fi
-  pid=$(cat ${PID_FILE})
-  if [ -n "${pid}" ]; then
-    ps_pid=$(ps -ef | grep "${pid}.*${PID_FILE}" | grep -v grep | awk '{print $2}')
-    if [ ${ps_pid:-0} -eq $pid ]; then
-      echo ${pid}
-      return
-    fi
-  fi
-  echo 0
+  ps_pid=$(ps -ef | grep "${PID_FILE}" | grep -v grep | awk '{print $2}' | head -n 1)
+  echo ${ps_pid:-0}
 }
 
 # ---- 根据pid查询是否进程在运行
