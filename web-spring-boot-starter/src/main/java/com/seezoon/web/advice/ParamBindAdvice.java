@@ -61,33 +61,4 @@ public class ParamBindAdvice {
             }
         });
     }
-
-    /**
-     * json 反序列化trim
-     *
-     * @return
-     */
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return new Jackson2ObjectMapperBuilderCustomizer() {
-            @Override
-            public void customize(Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
-                jacksonObjectMapperBuilder
-                        .deserializerByType(String.class, new StdScalarDeserializer<String>(String.class) {
-
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public String deserialize(JsonParser jsonParser, DeserializationContext ctx)
-                                    throws IOException {
-                                String valueAsString = jsonParser.getValueAsString();
-                                if (null != valueAsString) {
-                                    valueAsString = StringEscapeUtils.escapeHtml4(valueAsString.trim());
-                                }
-                                return valueAsString;
-                            }
-                        });
-            }
-        };
-    }
 }
