@@ -2,6 +2,7 @@ package com.seezoon.security;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -67,4 +68,20 @@ public class SeezoonUserDetails<T extends User> implements UserDetails {
         return userInfo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SeezoonUserDetails<?> that = (SeezoonUserDetails<?>) o;
+        return Objects.equals(username, that.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
+    }
 }

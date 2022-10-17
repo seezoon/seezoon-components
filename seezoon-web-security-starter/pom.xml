@@ -10,7 +10,6 @@
         <groupId>com.seezoon</groupId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
-
     <artifactId>seezoon-web-security-starter</artifactId>
     <name>${project.artifactId}</name>
     <description>seezoon web security</description>
